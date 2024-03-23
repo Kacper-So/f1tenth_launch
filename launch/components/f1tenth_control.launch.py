@@ -51,6 +51,15 @@ def launch_setup(context, *args, **kwargs):
     with open(LaunchConfiguration('shift_decider_param_path').perform(context), 'r') as f:
         shift_decider_param = yaml.safe_load(f)['/**']['ros__parameters']
 
+    control_occupancy_grid = ComposableNode(
+        package='ros2_occupancy_grid_map',
+        name='control_occupancy_grid_exe',
+        remappings=[
+            ('odom', '/localization/kinematic_state'),
+            ('scan', '/sensing/lidar/scan'),
+            ('ocg', 'control_ocg'),
+        ]
+    )
     controller_component = ComposableNode(
         package='trajectory_follower_node',
         plugin='autoware::motion::control::trajectory_follower_node::Controller',
@@ -212,7 +221,8 @@ def launch_setup(context, *args, **kwargs):
             shift_decider_component,
             vehicle_cmd_gate_component,
             operation_mode_transition_manager_component,
-            glog_component
+            glog_component,
+            control_occupancy_grid 
         ]
     )
 
