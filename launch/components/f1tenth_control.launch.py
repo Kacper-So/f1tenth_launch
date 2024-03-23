@@ -57,7 +57,7 @@ def launch_setup(context, *args, **kwargs):
         remappings=[
             # ('odom', '/localization/kinematic_state'),
             ('input/pcl_1', '/sensing/lidar/scan'),
-            ('grid_topic_', 'control_ocg'),
+            ('grid_topic_', 'control_ocg')
         ]
     )
     controller_component = ComposableNode(
