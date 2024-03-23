@@ -55,9 +55,9 @@ def launch_setup(context, *args, **kwargs):
         package='ros2_occupancy_grid_map',
         name='control_occupancy_grid_exe',
         remappings=[
-            ('odom', '/localization/kinematic_state'),
-            ('scan', '/sensing/lidar/scan'),
-            ('ocg', 'control_ocg'),
+            # ('odom', '/localization/kinematic_state'),
+            ('input/pcl_1', '/sensing/lidar/scan'),
+            ('grid_topic_', 'control_ocg'),
         ]
     )
     controller_component = ComposableNode(
