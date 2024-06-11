@@ -66,7 +66,7 @@ def launch_setup(context, *args, **kwargs):
         name='controller_node_exe',
         namespace='trajectory_follower',
         remappings=[
-            ('~/input/reference_trajectory', '/planning/racing_planner/trajectory'),
+            ('~/input/reference_trajectory', '/planning/racing_planner/avoidance/trajectory'),
             ('~/input/current_odometry', '/localization/kinematic_state'),
             ('~/input/current_steering', '/vehicle/status/steering_status'),
             ('~/input/current_accel', '/localization/acceleration'),
@@ -97,7 +97,7 @@ def launch_setup(context, *args, **kwargs):
         name='control_validator',
         remappings=[
             ('~/input/kinematics', '/localization/kinematic_state'),
-            ('~/input/reference_trajectory', '/planning/racing_planner/trajectory'),
+            ('~/input/reference_trajectory', '/planning/racing_planner/avoidance/trajectory'),
             ('~/input/predicted_trajectory', '/control/trajectory_follower/lateral/predicted_trajectory'),
             ('~/output/validation_status', '~/validation_status')
         ],

@@ -22,13 +22,19 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import PushRosNamespace
+from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-
 
 def launch_setup(context, *args, **kwargs):
     pkg_prefix = FindPackageShare('f1tenth_launch')
     trajectory_loader_param_file = PathJoinSubstitution(
         [pkg_prefix, 'config/planning/trajectory_loader.param.yaml']
+    )
+    env_perceiver_param_file = PathJoinSubstitution(
+        [pkg_prefix, 'config/planning/env_perceiver_params.param.yaml']
+    )
+    traj_selector_param_file = PathJoinSubstitution(
+        [pkg_prefix, 'config/planning/traj_selector_params.param.yaml']
     )
     trajectory_csv_path = PathJoinSubstitution(
         [LaunchConfiguration('map_path'), 'trajectory.csv']
@@ -51,10 +57,35 @@ def launch_setup(context, *args, **kwargs):
         )
     ])
 
+    traj_selector_node = Node(
+        package='traj_selector',
+        executable='traj_selector',
+        name='traj_selector',
+        parameters=[traj_selector_param_file],
+        remappings=[
+            ("/traj", "/planning/racing_planner/trajectory"),
+            ("/odom", "/localization/kinematic_state")
+        ]
+    )
+
+    env_perceiver_node = Node(
+        package='env_perceiver',
+        executable='env_perceiver',
+        name='env_perceiver',
+        parameters=[env_perceiver_param_file]
+        remappings=[
+            ("/lidar", "/sensing/lidar/scan"),
+            ("/odom", "/localization/kinematic_state"),
+            ("/lidar", "/sensing/lidar/scan"),
+            ("/traj", "/planning/racing_planner/trajectory")
+        ]
+    )
+
     return [
         trajectory_loader_launch,
+        traj_selector_node,
+        env_perceiver_node,
     ]
-
 
 def generate_launch_description():
     declared_arguments = []
