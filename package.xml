@@ -9,7 +9,8 @@
 
   <buildtool_depend>ament_cmake_auto</buildtool_depend>
 
-  <exec_depend>ros2_occupancy_grid</exec_depend>
+  <exec_depend>env_perceiver</exec_depend>
+  <exec_depend>traj_selector</exec_depend>
   <exec_depend>ad_api_adaptors</exec_depend>
   <exec_depend>autoware_iv_external_api_adaptor</exec_depend>
   <exec_depend>cartographer_ros</exec_depend>
