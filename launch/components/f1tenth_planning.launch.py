@@ -31,10 +31,10 @@ def launch_setup(context, *args, **kwargs):
         [pkg_prefix, 'config/planning/trajectory_loader.param.yaml']
     )
     env_perceiver_param_file = PathJoinSubstitution(
-        [pkg_prefix, 'config/planning/env_perceiver_params.param.yaml']
+        [pkg_prefix, 'config/planning/env_perceiver_params.yaml']
     )
     traj_selector_param_file = PathJoinSubstitution(
-        [pkg_prefix, 'config/planning/traj_selector_params.param.yaml']
+        [pkg_prefix, 'config/planning/traj_selector_params.yaml']
     )
     trajectory_csv_path = PathJoinSubstitution(
         [LaunchConfiguration('map_path'), 'trajectory.csv']
@@ -72,7 +72,7 @@ def launch_setup(context, *args, **kwargs):
         package='env_perceiver',
         executable='env_perceiver',
         name='env_perceiver',
-        parameters=[env_perceiver_param_file]
+        parameters=[env_perceiver_param_file],
         remappings=[
             ("/lidar", "/sensing/lidar/scan"),
             ("/odom", "/localization/kinematic_state"),
