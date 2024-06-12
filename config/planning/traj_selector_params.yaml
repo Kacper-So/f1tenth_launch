@@ -15,6 +15,6 @@ traj_selector:
     angle_goal_range: 15.0
     obstacle_threshold: 100
     vehicle_length: 0.48
-    vehicle_width: 0.25
+    vehicle_width: 0.5
     vehicle_base2back: 0.33
-    out_time: 1.
+    out_time: 3.5
